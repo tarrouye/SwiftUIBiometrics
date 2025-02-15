@@ -15,8 +15,8 @@ import LocalAuthentication
 @Observable
 @MainActor
 public class Biometrics {
-  private(set) var isBiometricsAvailable: Bool = false
-  private(set) var biometryType: LABiometryType = .none
+  public private(set) var isBiometricsAvailable: Bool = false
+  public private(set) var biometryType: LABiometryType = .none
 
   public init() {
     checkBiometricAvailability()
@@ -44,7 +44,7 @@ public class Biometrics {
     return try await context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReason)
   }
 
-  var biometryName: String {
+  public var biometryName: String {
     switch biometryType {
     case .faceID:
       return "Face ID"
@@ -56,7 +56,7 @@ public class Biometrics {
   }
 
   /// SFSymbol name corresponding to the biometryType for this device
-  var biometryIcon: String {
+  public var biometryIcon: String {
     switch biometryType {
     case .faceID:
       return "faceid"
