@@ -4,18 +4,25 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftUIBiometrics",
-    products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "SwiftUIBiometrics",
-            targets: ["SwiftUIBiometrics"]),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .target(
-            name: "SwiftUIBiometrics"),
-
-    ]
+  name: "SwiftUIBiometrics",
+  platforms: [
+    .macOS(.v14),
+    .macCatalyst(.v17),
+    .iOS(.v17),
+    .visionOS(.v1)
+  ],
+  products: [
+    // Products define the executables and libraries a package produces, making them visible to other packages.
+    .library(
+      name: "SwiftUIBiometrics",
+      targets: ["SwiftUIBiometrics"]
+    )
+  ],
+  targets: [
+    // Targets are the basic building blocks of a package, defining a module or a test suite.
+    // Targets can depend on other targets in this package and products from dependencies.
+    .target(
+      name: "SwiftUIBiometrics"
+    )
+  ]
 )
