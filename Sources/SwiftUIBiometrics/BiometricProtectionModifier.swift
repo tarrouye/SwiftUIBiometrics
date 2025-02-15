@@ -78,7 +78,6 @@ private struct BiometricProtectionModifier: ViewModifier {
 
       Text("\(biometrics.biometryName) Required")
         .font(titleFont)
-        .fontWeight(.semibold)
 
       Text("Please authenticate to continue")
         .font(subtitleFont)
@@ -164,7 +163,7 @@ private struct BiometricProtectionModifier: ViewModifier {
 public extension View {
   func biometricProtection(
     isUnlocked: Bool = false,
-    titleFont: Font = .title2,
+    titleFont: Font = .title2.bold(),
     subtitleFont: Font = .body,
     buttonFont: Font = .headline,
     accentColor: Color = Color.accentColor,
