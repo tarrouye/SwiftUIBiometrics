@@ -2,6 +2,10 @@
 
 A lightweight library to easily protect screens in your SwiftUI app with Biometric auth.
 
+
+https://github.com/user-attachments/assets/47457b30-3e85-4beb-9738-ff5a69582e52
+
+
 ### Installation
 
 
