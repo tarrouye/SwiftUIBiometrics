@@ -19,6 +19,7 @@ func biometricProtection(
 ```
 
 You can optionally pass `isUnlocked` to pre-unlock the screen. For example, if the biometric protection is enabled/disabled by a user setting. 
+
 You can also pass several fonts and a color to customize the UI of the screen, as well as a reason to pass along to the LocalAuthentication request. 
 
 #### Protecting a toggle
@@ -33,6 +34,7 @@ BiometricToggle<Content: View>(
 ```
 
 Works similarly to `SwiftUI.Toggle`, but toggling the switch will be protected by biometric auth. 
+
 This is perfect to use in a settings view where you allow the user to enable/disable biometric protection for other screens.
 
 To use a `BiometricToggle`, you must inject a `Biometrics` object into the `Environment`. 
