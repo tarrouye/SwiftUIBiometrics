@@ -2,7 +2,12 @@
 
 A lightweight library to easily protect screens in your SwiftUI app with Biometric auth.
 
+### Installation
+
+
 ### Usage
+Add `https://github.com/tarrouye/SwiftUIBiometrics` in the [“Swift Package Manager” tab in Xcode](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app).
+
 
 #### Protecting a screen
 To protect a screen with biometrics, simply apply the `.biometricProtection` modifier to it
