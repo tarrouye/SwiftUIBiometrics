@@ -8,12 +8,14 @@ https://github.com/user-attachments/assets/47457b30-3e85-4beb-9738-ff5a69582e52
 
 ### Installation
 
-
-### Usage
 Add `https://github.com/tarrouye/SwiftUIBiometrics` in the [“Swift Package Manager” tab in Xcode](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app).
 
+### Usage
+
+Don't forget to add [NSFaceIDUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nsfaceidusagedescription) key in your Info.plist ! 
 
 #### Protecting a screen
+
 To protect a screen with biometrics, simply apply the `.biometricProtection` modifier to it
 
 ```
@@ -32,6 +34,7 @@ You can optionally pass `isUnlocked` to pre-unlock the screen. For example, if t
 You can also pass several fonts and a color to customize the UI of the screen, as well as a reason to pass along to the LocalAuthentication request. 
 
 #### Protecting a toggle
+
 ```
 BiometricToggle<Content: View>(
   isEnabled: Binding<Bool>, 
