@@ -7,6 +7,11 @@
 
 import SwiftUI
 import LocalAuthentication
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 @available(macOS 14.0, *)
 @available(iOS 17.0, *)
@@ -28,20 +33,26 @@ public class Biometrics {
 
   private func checkBiometricAvailability() {
     let context = LAContext()
-    var error: NSError?
-
-    if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-      self.isBiometricsAvailable = true
-      self.biometryType = context.biometryType
-    } else {
-      self.isBiometricsAvailable = false
-      self.biometryType = .none
-    }
+    
+    self.biometryType = context.biometryType
+    self.isBiometricsAvailable = context.biometryType != .none
   }
 
   private func evaluatePolicy(localizedReason: String) async throws -> Bool {
     let context = LAContext()
     return try await context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReason)
+  }
+
+  public static func openSettings() {
+    #if os(iOS) || os(visionOS)
+    if let url = URL(string: UIApplication.openSettingsURLString) {
+      UIApplication.shared.open(url)
+    }
+    #elseif os(macOS)
+    if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Biometrics") {
+      NSWorkspace.shared.open(url)
+    }
+    #endif
   }
 
   public var biometryName: String {

@@ -20,6 +20,7 @@ private struct BiometricProtectionModifier: ViewModifier {
   @State private var isUnlocked: Bool = false
   @State private var error: String? = nil
   @State private var showingAlert = false
+  @State private var showSettingsAlert = false
 
   @State private var authTrigger: Bool = false
 
@@ -67,6 +68,7 @@ private struct BiometricProtectionModifier: ViewModifier {
           dismissButton: .default(Text("OK"))
         )
       }
+      .withBioSettingsPermissionAlert(isPresented: $showSettingsAlert)
   }
 
   private var lockedContent: some View {
@@ -138,7 +140,11 @@ private struct BiometricProtectionModifier: ViewModifier {
     case .userFallback:
       setError(String(localized: "You chose to use password instead"))
     case .biometryNotAvailable:
-      setError(String(localized: "\(biometrics.biometryName) is not available on this device"))
+      if biometrics.isBiometricsAvailable {
+        Task { @MainActor in showSettingsAlert = true }
+      } else {
+        setError(String(localized: "\(biometrics.biometryName) is not available on this device"))
+      }
     case .biometryNotEnrolled:
       setError(String(localized: "You haven't set up \(biometrics.biometryName) on this device"))
     case .biometryLockout:

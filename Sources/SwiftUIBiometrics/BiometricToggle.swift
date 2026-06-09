@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LocalAuthentication
 
 @available(macOS 14.0, *)
 @available(iOS 17.0, *)
@@ -19,6 +20,7 @@ public struct BiometricToggle<Content: View>: View {
   @State private var isToggling = false
   @State private var showAlert = false
   @State private var alertMessage = ""
+  @State private var showSettingsAlert = false
 
   let label: () -> Content
 
@@ -49,6 +51,7 @@ public struct BiometricToggle<Content: View>: View {
         dismissButton: .default(Text("OK"))
       )
     }
+    .withBioSettingsPermissionAlert(isPresented: $showSettingsAlert)
   }
 
   private func toggleProtection() async {
@@ -68,7 +71,11 @@ public struct BiometricToggle<Content: View>: View {
       }
     } catch {
       await MainActor.run {
-        showError(toggled: toggled)
+        if biometrics.isBiometricsAvailable, let laError = error as? LAError, laError.code == .biometryNotAvailable {
+          showSettingsAlert = true
+        } else {
+          showError(toggled: toggled)
+        }
         isToggling = false
       }
     }
@@ -78,5 +85,18 @@ public struct BiometricToggle<Content: View>: View {
     let enableString = toggled ? String(localized: "enable") : String(localized: "disable")
     alertMessage = String(localized: "Unable to \(enableString) \(biometrics.biometryName) protection. Please try again.")
     showAlert = true
+  }
+}
+
+extension View {
+  func withBioSettingsPermissionAlert(isPresented: Binding<Bool>) -> some View {
+    alert(String(localized: "Permission Denied"), isPresented: isPresented) {
+      Button(String(localized: "Cancel"), role: .cancel) { }
+      Button(String(localized: "Open Settings")) {
+        Biometrics.openSettings()
+      }
+    } message: {
+      Text(String(localized: "Biometric authentication is denied. Please enable it in Settings."))
+    }
   }
 }
