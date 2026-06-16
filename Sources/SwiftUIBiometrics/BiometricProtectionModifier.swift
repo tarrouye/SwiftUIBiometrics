@@ -17,7 +17,7 @@ import LocalAuthentication
 private struct BiometricProtectionModifier: ViewModifier {
   @State private var biometrics = Biometrics()
 
-  @State private var isUnlocked: Bool = false
+  @State private var isUnlocked: Bool
   @State private var error: String? = nil
   @State private var showingAlert = false
   @State private var showSettingsAlert = false
